@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trading Journal by VRFE</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="app.css?v=2">
+</head>
+
+<body>
+  <div class="app" id="app">
+
+    <!-- ==================== SIDEBAR (vault) ==================== -->
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <img class="brand-logo" src="icons/icon128.png" alt="VRFE" width="34" height="34">
+        <div class="brand-text">
+          <div class="brand-title">Trading Journal</div>
+          <div class="brand-sub">by VRFE</div>
+        </div>
+        <a class="iconbtn only no-print" id="homeLink" title="Home" style="margin-left:auto"
+          href="index.html">&#8962;</a>
+      </div>
+
+      <button class="sb-search no-print" id="cmdkOpen">
+        <svg class="ic" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7" />
+          <path d="M21 21l-4-4" />
+        </svg>
+        <span style="color:var(--ink-4)">Search &amp; commands</span>
+        <span class="kbd">&#8984; K</span>
+      </button>
+
+      <nav class="sb-nav" id="sbNav">
+        <button class="sb-item active" data-view="day">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="17" rx="2" />
+            <path d="M3 9h18M8 2v4M16 2v4" />
+          </svg>
+          Today&rsquo;s page
+        </button>
+        <button class="sb-item" data-view="week">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+          </svg>
+          Week
+        </button>
+        <button class="sb-item" data-view="month">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="17" rx="2" />
+            <path d="M3 10h18" />
+          </svg>
+          Month
+        </button>
+        <button class="sb-item" data-view="analytics">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19V5M4 19h16M8 15l3-4 3 3 4-6" />
+          </svg>
+          Analytics
+        </button>
+        <button class="sb-item" data-view="rules">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+          Trader&rsquo;s Rules
+        </button>
+        <button class="sb-item" data-view="export">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v12m0-12l-4 4m4-4l4 4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+          </svg>
+          Export
+        </button>
+        <button class="sb-item" data-view="settings">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 3.6 15H3.5a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 5 8.6l-.06-.05a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 5.6h.09A1.65 1.65 0 0 0 11 3.6V3.5a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 16 5.6h.09a1.65 1.65 0 0 0 1.51-1.17" />
+          </svg>
+          Settings
+        </button>
+      </nav>
+
+      <div class="sb-sep"></div>
+
+      <div class="sb-scroll">
+        <div class="mini-cal">
+          <div class="mc-head">
+            <button class="mc-nav" id="mcPrev">&#8249;</button>
+            <div class="mc-title" id="mcTitle">—</div>
+            <button class="mc-nav" id="mcNext">&#8250;</button>
+          </div>
+          <div class="mc-grid" id="mcGrid"></div>
+        </div>
+
+        <div class="sb-head">Daily notes <button id="sbNewDay" title="Go to today">&#8635;</button></div>
+        <div id="dayList"></div>
+
+        <div class="sb-head" style="margin-top:6px">Tags</div>
+        <div id="tagList" style="padding-bottom:8px"></div>
+      </div>
+
+      <div class="sb-foot no-print">
+        <span class="grow" style="font-size:11px;color:var(--ink-4)" id="storeInfo">Saved locally</span>
+        <button class="iconbtn only" id="themeBtn" title="Toggle theme"
+          style="height:30px;min-width:30px">&#9789;</button>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <!-- ==================== MAIN ==================== -->
+    <main class="main">
+      <div class="topbar">
+        <button class="iconbtn only no-print" id="sbToggle" title="Toggle sidebar">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="M9 4v16" />
+          </svg>
+        </button>
+        <button class="iconbtn only no-print" id="navPrev" title="Previous day">&#8249;</button>
+        <button class="iconbtn no-print" id="navToday">Today</button>
+        <button class="iconbtn only no-print" id="navNext" title="Next day">&#8250;</button>
+        <input type="date" class="iconbtn no-print" id="datePick" style="padding:0 10px">
+        <div class="crumb" style="margin-left:6px">
+          <span class="h" id="crumbH">&nbsp;</span>
+          <span class="s" id="crumbS">&nbsp;</span>
+        </div>
+        <div class="grow"></div>
+        <button class="iconbtn no-print" id="cmdkOpen2" title="Command palette (⌘K)">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4-4" />
+          </svg>
+        </button>
+        <button class="btn primary sm no-print" id="addTradeTop">+ Trade</button>
+      </div>
+
+      <div class="content" id="content">
+        <div class="pad">
+
+          <!-- ===== DAY ===== -->
+          <section id="view-day">
+            <div class="card">
+              <div class="dayresult">
+                <span class="dr-label">Day ended in:</span>
+                <div class="chip profit"><span class="nm">Profit</span><span class="nm cur">&#8377;</span><input
+                    id="dayProfit" inputmode="decimal" placeholder="0"></div>
+                <span class="slash">/</span>
+                <div class="chip loss"><span class="nm">Loss</span><span class="nm cur">&#8377;</span><input
+                    id="dayLoss" inputmode="decimal" placeholder="0"></div>
+                <div class="net"><span class="k">Net P&amp;L</span><span class="v" id="dayNet">&mdash;</span></div>
+              </div>
+              <div class="stats" id="dayStats"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <span class="card-title">Trades</span>
+                <span class="card-sub">Times auto-stamp as you log &mdash; every field stays editable.</span>
+                <div class="grow"></div>
+                <button class="btn sm no-print" id="addTrade2">+ Add trade</button>
+              </div>
+              <div class="tscroll">
+                <table class="trades">
+                  <thead>
+                    <tr>
+                      <th class="rownum">#</th>
+                      <th>Entry Time</th>
+                      <th>Symbol</th>
+                      <th>Side</th>
+                      <th class="num">Qty</th>
+                      <th class="num">Entry</th>
+                      <th class="num">Stop</th>
+                      <th class="num">Target</th>
+                      <th class="num">Exit</th>
+                      <th>Exit Time</th>
+                      <th class="num">R/R</th>
+                      <th class="num">P&amp;L</th>
+                      <th class="num">% Risked</th>
+                      <th>Followed rules?</th>
+                      <th>Note</th>
+                      <th class="no-print"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tradeBody"></tbody>
+                </table>
+              </div>
+              <div class="empty hidden" id="tradeEmpty">
+                <div class="big">&#128202;</div>No trades logged yet. Press <span class="kbd">N</span> or <strong>+ Add
+                  trade</strong>.
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div class="card">
+                <div class="card-head"><span class="card-title">Reason</span><span class="card-sub">Why I took these
+                    trades</span></div>
+                <div class="card-body" data-md="reason"
+                  data-ph="Setup, market context, why the trade made sense&hellip; Use #tags and [[links]]."></div>
+              </div>
+              <div class="card">
+                <div class="card-head"><span class="card-title">Learnings</span><span class="card-sub">What I&rsquo;ll
+                    do differently</span></div>
+                <div class="card-body" data-md="learnings"
+                  data-ph="Mistakes, what worked, what to repeat or avoid tomorrow&hellip;"></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <span class="card-title">Notebook</span>
+                <span class="card-sub">Timestamped notes &mdash; markdown, #tags and [[links]] supported.</span>
+                <div class="grow"></div>
+                <button class="btn sm no-print" id="addNote">+ New note</button>
+              </div>
+              <div id="noteList"></div>
+              <div class="empty hidden" id="noteEmpty">Nothing written yet today.</div>
+            </div>
+
+            <div class="card" id="backlinkCard">
+              <div class="card-head"><span class="card-title">Linked mentions</span><span class="card-sub"
+                  id="blSub">Other days that link here</span></div>
+              <div class="backlinks" id="backlinks"></div>
+            </div>
+          </section>
+
+          <!-- ===== WEEK ===== -->
+          <section id="view-week" class="hidden">
+            <div class="card">
+              <div class="stats" id="weekStats"></div>
+            </div>
+            <div class="card">
+              <table class="grid" id="weekTable"></table>
+            </div>
+          </section>
+
+          <!-- ===== MONTH ===== -->
+          <section id="view-month" class="hidden">
+            <div class="card">
+              <div class="stats" id="monthStats"></div>
+            </div>
+            <div class="card">
+              <div class="cal" id="calendar"></div>
+            </div>
+          </section>
+
+          <!-- ===== ANALYTICS ===== -->
+          <section id="view-analytics" class="hidden">
+            <div class="card">
+              <div class="card-head"><span class="card-title">Equity curve</span><span class="card-sub"
+                  id="eqSub">Cumulative net P&amp;L</span>
+                <div class="grow"></div>
+                <div class="seg no-print" id="eqSeg">
+                  <button data-eq="30" class="active">30d</button><button data-eq="90">90d</button><button
+                    data-eq="365">1y</button><button data-eq="all">All</button>
+                </div>
+              </div>
+              <div class="equity" id="equity"></div>
+            </div>
+            <div class="card">
+              <div class="stats" id="anStats"></div>
+            </div>
+            <div class="two-col">
+              <div class="card">
+                <div class="card-head"><span class="card-title">By symbol</span></div>
+                <table class="grid" id="bySymbol"></table>
+              </div>
+              <div class="card">
+                <div class="card-head"><span class="card-title">By tag</span></div>
+                <table class="grid" id="byTag"></table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== RULES ===== -->
+          <section id="view-rules" class="hidden">
+            <div class="card">
+              <div class="rules-hero">
+                <h2>Trader&rsquo;s Rules</h2>
+                <p>Your standing rules, exported with every journal. Edit freely to match your system.</p>
+              </div>
+              <ul class="rules-list" id="rulesList"></ul>
+              <div class="card-body no-print"
+                style="display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line)">
+                <button class="btn" id="addRule">+ Add rule</button>
+                <button class="btn ghost" id="resetRules">Restore VRFE defaults</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== EXPORT ===== -->
+          <section id="view-export" class="hidden">
+            <div class="card">
+              <div class="card-head"><span class="card-title">Export range</span>
+                <div class="grow"></div>
+                <div class="seg" id="scopeSeg">
+                  <button data-scope="day" class="active">Day</button><button data-scope="week">Week</button><button
+                    data-scope="month">Month</button><button data-scope="all">Everything</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="exp-grid">
+                  <div class="exp-card">
+                    <h4>Markdown <span class="badge">Obsidian · Notion</span></h4>
+                    <p>YAML front-matter, tables, #tags and [[links]] preserved. Drops straight into a vault.</p>
+                    <div class="exp-actions"><button class="btn primary sm" data-dl="md">Download</button><button
+                        class="btn sm" data-copy="md">Copy</button><button class="btn sm ghost"
+                        data-prev="md">Preview</button></div>
+                  </div>
+                  <div class="exp-card">
+                    <h4>Trades CSV <span class="badge">Excel · Sheets</span></h4>
+                    <p>One row per trade. Opens in Excel, Google Sheets or a Notion database.</p>
+                    <div class="exp-actions"><button class="btn primary sm" data-dl="csv">Download</button><button
+                        class="btn sm" data-copy="csv">Copy</button><button class="btn sm ghost"
+                        data-prev="csv">Preview</button></div>
+                  </div>
+                  <div class="exp-card">
+                    <h4>Daily summary CSV</h4>
+                    <p>One row per day &mdash; P&amp;L, win rate, rule adherence, reason &amp; learnings.</p>
+                    <div class="exp-actions"><button class="btn primary sm" data-dl="daycsv">Download</button><button
+                        class="btn sm" data-copy="daycsv">Copy</button><button class="btn sm ghost"
+                        data-prev="daycsv">Preview</button></div>
+                  </div>
+                  <div class="exp-card">
+                    <h4>Excel workbook <span class="badge">.xls</span></h4>
+                    <p>Formatted, styled sheet. Double-click to open in Excel or Numbers.</p>
+                    <div class="exp-actions"><button class="btn primary sm" data-dl="xls">Download</button></div>
+                  </div>
+                  <div class="exp-card">
+                    <h4>Rich HTML <span class="badge">Evernote</span></h4>
+                    <p>For Evernote &amp; OneNote &mdash; download or copy and paste directly in.</p>
+                    <div class="exp-actions"><button class="btn primary sm" data-dl="html">Download</button><button
+                        class="btn sm" data-copy="html">Copy</button></div>
+                  </div>
+                  <div class="exp-card">
+                    <h4>JSON backup</h4>
+                    <p>Complete backup of every day, trade, note &amp; rule. Restore from Settings.</p>
+                    <div class="exp-actions"><button class="btn primary sm" data-dl="json">Download</button></div>
+                  </div>
+                </div>
+                <pre class="preview hidden" id="preview"></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== SETTINGS ===== -->
+          <section id="view-settings" class="hidden">
+            <div class="two-col">
+              <div class="card">
+                <div class="card-head"><span class="card-title">Account</span></div>
+                <div class="card-body">
+                  <div class="field"><label for="setName">Trader name</label><input id="setName"
+                      placeholder="Your name"></div>
+                  <div class="field"><label for="setAccount">Account size</label><input id="setAccount"
+                      inputmode="decimal" placeholder="100000"><span class="hint">Drives <strong>% of account
+                        risked</strong> on every trade.</span></div>
+                  <div class="field"><label for="setCurrency">Currency symbol</label><input id="setCurrency"
+                      placeholder="&#8377;"></div>
+                  <div class="field"><label for="setStamp">Auto timestamp</label><select id="setStamp">
+                      <option value="on">On &mdash; stamp date &amp; time automatically (editable)</option>
+                      <option value="off">Off &mdash; enter times manually</option>
+                    </select></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-head"><span class="card-title">Data</span></div>
+                <div class="card-body">
+                  <div class="field"><label>Backup</label>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="btnBackup">Download JSON
+                        backup</button><button class="btn" id="btnRestore">Restore from file</button><input type="file"
+                        id="restoreFile" accept="application/json" class="hidden"></div><span class="hint">Everything
+                      stays on this device. Nothing is uploaded.</span>
+                  </div>
+                  <div class="field"><label>Sample data</label>
+                    <div><button class="btn" id="btnDemo">Load demo week</button></div><span class="hint">Fills the last
+                      5 weekdays with example trades.</span>
+                  </div>
+                  <div class="field"><label>Danger zone</label>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn danger" id="btnClearDay">Clear
+                        this day</button><button class="btn danger" id="btnClearAll">Erase all data</button></div>
+                  </div>
+                  <div class="field"><label>About</label><span class="hint">Trading Journal by VRFE (VR Financial
+                      Educators) &middot; v2.0<br>A journal, not advice. Track your own trades, follow your own
+                      rules.</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- command palette -->
+  <div class="cmdk-back hidden" id="cmdkBack">
+    <div class="cmdk" role="dialog" aria-label="Command palette">
+      <div class="cmdk-in">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7" />
+          <path d="M21 21l-4-4" />
+        </svg>
+        <input id="cmdkInput" placeholder="Jump to a day, search notes, or run a command…" autocomplete="off">
+      </div>
+      <div class="cmdk-list" id="cmdkList"></div>
+      <div class="cmdk-foot">
+        <span><span class="kbd">&#8593;&#8595;</span> navigate</span>
+        <span><span class="kbd">&#8629;</span> open</span>
+        <span><span class="kbd">esc</span> close</span>
+        <span style="margin-left:auto">Type <strong>&gt;</strong> for commands, <strong>#</strong> for tags</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="app.js"></script>
+</body>
+
+</html>
